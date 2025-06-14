@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIS2 Cybersecurity Risk Management Report</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20mm;
+            background: white;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #059669;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #059669;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header .subtitle {
+            color: #666;
+            font-size: 16px;
+            font-weight: normal;
+        }
+        
+        .organization-info {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid #0ea5e9;
+        }
+        
+        .organization-info h2 {
+            color: #059669;
+            margin-top: 0;
+            font-size: 20px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #475569;
+        }
+        
+        .info-value {
+            color: #1e293b;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+        
+        .section h2 {
+            color: #059669;
+            font-size: 22px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .section h3 {
+            color: #374151;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .executive-summary {
+            background: #f0fdf4;
+            border-left: 5px solid #059669;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .risk-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .metric-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #dc2626;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value.positive {
+            color: #059669;
+        }
+        
+        .metric-label {
+            color: #6b7280;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .compliance-section {
+            background: #f8fafc;
+            border: 1px solid #64748b;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .compliance-requirement {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid #0ea5e9;
+        }
+        
+        .requirement-title {
+            font-weight: 600;
+            color: #0ea5e9;
+            margin-bottom: 8px;
+        }
+        
+        .requirement-content {
+            color: #374151;
+            line-height: 1.5;
+        }
+        
+        .article-section {
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .article-section h3 {
+            color: #d97706;
+            margin-top: 0;
+        }
+        
+        .controls-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        
+        .controls-table th,
+        .controls-table td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .controls-table th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .controls-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+        
+        .status-implemented {
+            color: #059669;
+            font-weight: bold;
+        }
+        
+        .status-partial {
+            color: #d97706;
+            font-weight: bold;
+        }
+        
+        .status-planned {
+            color: #6b7280;
+            font-weight: bold;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            color: #6b7280;
+            font-size: 12px;
+        }
+        
+        .page-break {
+            page-break-before: always;
+        }
+        
+        @media print {
+            body {
+                font-size: 12px;
+            }
+            
+            .metric-card {
+                break-inside: avoid;
+            }
+            
+            .section {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>NIS2 Directive Compliance Report</h1>
+        <div class="subtitle">Cybersecurity Risk Management Measures Assessment</div>
+        <div class="subtitle">{{ generated_date }}</div>
+    </div>
+
+    <!-- Organization Information -->
+    <div class="organization-info">
+        <h2>Organization & Scope</h2>
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">Organization:</span>
+                <span class="info-value">{{ organization }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Report Date:</span>
+                <span class="info-value">{{ generated_date }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Entity Type:</span>
+                <span class="info-value">{{ entity_type | default('Essential/Important Entity') }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Sector:</span>
+                <span class="info-value">{{ sector | default('Digital Infrastructure') }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Assessment Period:</span>
+                <span class="info-value">{{ assessment_period | default('12 months') }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Risk Scenario:</span>
+                <span class="info-value">{{ scenario_name }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="executive-summary">
+        <h3>Executive Summary</h3>
+        <p>
+            This report demonstrates compliance with the Network and Information Systems Security Directive 
+            (NIS2) 2022/2555, specifically Article 21 cybersecurity risk management measures. The quantitative 
+            assessment provides evidence of appropriate risk management measures and their effectiveness in 
+            protecting critical network and information systems.
+        </p>
+        <p>
+            <strong>Key Finding:</strong> Current cybersecurity measures are effective in managing identified 
+            risks, with quantified annual risk exposure of <strong>{{ ale_formatted }}</strong> falling within 
+            acceptable tolerance levels for {{ entity_type | default('our entity type') }}.
+        </p>
+    </div>
+
+    <!-- Risk Assessment Dashboard -->
+    <div class="risk-metrics">
+        <div class="metric-card">
+            <div class="metric-value">{{ ale_formatted }}</div>
+            <div class="metric-label">Annual Risk Exposure</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value positive">{{ risk_reduction_percentage | default('XX') }}%</div>
+            <div class="metric-label">Risk Reduction</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">{{ risk_level }}</div>
+            <div class="metric-label">Risk Level</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value positive">{{ compliance_score | default('High') }}</div>
+            <div class="metric-label">Compliance Level</div>
+        </div>
+    </div>
+
+    <!-- NIS2 Article 21 Compliance -->
+    <div class="section">
+        <h2>NIS2 Article 21 - Cybersecurity Risk Management Measures</h2>
+        
+        <div class="article-section">
+            <h3>Article 21(1) - General Requirement</h3>
+            <p>
+                Essential and important entities shall take appropriate and proportionate technical, 
+                operational and organisational measures to manage the risks posed to the security of 
+                network and information systems which those entities use for their operations or for 
+                the provision of their services.
+            </p>
+            
+            <p><strong>Compliance Status:</strong> 
+                <span class="status-implemented">IMPLEMENTED</span> - 
+                Comprehensive risk management framework established with quantified risk exposure 
+                of {{ ale_formatted }} within acceptable limits.
+            </p>
+        </div>
+
+        <div class="compliance-section">
+            <h3>Article 21(2) - Specific Measures Implementation</h3>
+            
+            <div class="compliance-requirement">
+                <div class="requirement-title">(a) Risk Analysis and Information System Security Policies</div>
+                <div class="requirement-content">
+                    <strong>Implementation:</strong> Quantitative risk analysis conducted using Monte Carlo 
+                    simulation with {{ iterations | number_format }} iterations. Information security 
+                    policies cover all critical systems and data processing activities.<br>
+                    <strong>Evidence:</strong> Risk assessment results demonstrate {{ risk_level }} risk 
+                    level with annual loss expectancy of {{ ale_formatted }}.
+                </div>
+            </div>
+            
+            <div class="compliance-requirement">
+                <div class="requirement-title">(b) Incident Handling</div>
+                <div class="requirement-content">
+                    <strong>Implementation:</strong> Formal incident response procedures established 
+                    with defined roles, escalation paths, and recovery procedures.<br>
+                    <strong>Evidence:</strong> Incident handling capability tested through tabletop 
+                    exercises and real-world incident management.
+                </div>
+            </div>
+            
+            <div class="compliance-requirement">
+                <div class="requirement-title">(c) Business Continuity</div>
+                <div class="requirement-content">
+                    <strong>Implementation:</strong> Business continuity plans address cyber incident 
+                    scenarios with quantified recovery time and point objectives.<br>
+                    <strong>Evidence:</strong> Impact assessment shows potential {{ impact_duration | default('24-48 hour') }} 
+                    service disruption with {{ recovery_cost | default('£XX,XXX') }} recovery costs.
+                </div>
+            </div>
+            
+            <div class="compliance-requirement">
+                <div class="requirement-title">(d) Supply Chain Security</div>
+                <div class="requirement-content">
+                    <strong>Implementation:</strong> Third-party risk assessment program covers all 
+                    critical suppliers with contractual security requirements.<br>
+                    <strong>Evidence:</strong> {{ supplier_count | default('XX') }} critical suppliers 
+                    assessed with {{ supplier_compliance | default('XX%') }} meeting security standards.
+                </div>
+            </div>
+            
+            <div class="compliance-requirement">
+                <div class="requirement-title">(e) Security in Network and Information Systems Acquisition</div>
+                <div class="requirement-content">
+                    <strong>Implementation:</strong> Security requirements integrated into procurement 
+                    processes with mandatory security assessments for all technology acquisitions.<br>
+                    <strong>Evidence:</strong> Security-by-design principles applied to all new system 
+                    implementations and upgrades.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- Detailed Risk Management Measures -->
+    <div class="section">
+        <h2>Technical and Organisational Measures</h2>
+        
+        <table class="controls-table">
+            <thead>
+                <tr>
+                    <th>NIS2 Requirement</th>
+                    <th>Control Implementation</th>
+                    <th>Status</th>
+                    <th>Effectiveness</th>
+                    <th>Investment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Access Controls & Authentication</td>
+                    <td>Multi-factor authentication, privileged access management</td>
+                    <td><span class="status-implemented">Implemented</span></td>
+                    <td>92%</td>
+                    <td>£{{ access_control_investment | default('85,000') }}</td>
+                </tr>
+                <tr>
+                    <td>Network Security</td>
+                    <td>Next-gen firewalls, network segmentation, intrusion detection</td>
+                    <td><span class="status-implemented">Implemented</span></td>
+                    <td>88%</td>
+                    <td>£{{ network_investment | default('150,000') }}</td>
+                </tr>
+                <tr>
+                    <td>Endpoint Protection</td>
+                    <td>EDR/XDR solutions, patch management, device control</td>
+                    <td><span class="status-implemented">Implemented</span></td>
+                    <td>85%</td>
+                    <td>£{{ endpoint_investment | default('95,000') }}</td>
+                </tr>
+                <tr>
+                    <td>Data Protection & Encryption</td>
+                    <td>Data encryption at rest/transit, backup systems, DLP</td>
+                    <td><span class="status-implemented">Implemented</span></td>
+                    <td>90%</td>
+                    <td>£{{ data_investment | default('120,000') }}</td>
+                </tr>
+                <tr>
+                    <td>Vulnerability Management</td>
+                    <td>Automated scanning, penetration testing, patch management</td>
+                    <td><span class="status-implemented">Implemented</span></td>
+                    <td>83%</td>
+                    <td>£{{ vuln_investment | default('65,000') }}</td>
+                </tr>
+                <tr>
+                    <td>Security Monitoring & SIEM</td>
+                    <td>24/7 SOC, SIEM platform, threat intelligence</td>
+                    <td><span class="status-partial">Partially Implemented</span></td>
+                    <td>75%</td>
+                    <td>£{{ monitoring_investment | default('180,000') }}</td>
+                </tr>
+                <tr>
+                    <td>Staff Awareness & Training</td>
+                    <td>Regular training, phishing simulations, security awareness</td>
+                    <td><span class="status-implemented">Implemented</span></td>
+                    <td>70%</td>
+                    <td>£{{ training_investment | default('45,000') }}</td>
+                </tr>
+                <tr>
+                    <td>Incident Response</td>
+                    <td>IR team, playbooks, forensics capability</td>
+                    <td><span class="status-implemented">Implemented</span></td>
+                    <td>80%</td>
+                    <td>£{{ incident_investment | default('75,000') }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Risk Assessment Results -->
+    <div class="section">
+        <h2>Quantitative Risk Assessment Results</h2>
+        
+        <h3>Monte Carlo Simulation Analysis</h3>
+        <p>
+            The cybersecurity risk assessment was conducted using industry-standard FAIR methodology 
+            with {{ iterations | number_format }} Monte Carlo iterations to quantify risk exposure:
+        </p>
+        
+        <table class="controls-table">
+            <thead>
+                <tr>
+                    <th>Risk Metric</th>
+                    <th>Value</th>
+                    <th>Acceptability</th>
+                    <th>NIS2 Compliance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Annual Loss Expectancy (ALE)</td>
+                    <td>{{ ale_formatted }}</td>
+                    <td>Within tolerance</td>
+                    <td>✓ Appropriate measures</td>
+                </tr>
+                <tr>
+                    <td>95th Percentile Loss</td>
+                    <td>£{{ var_95 | default('0') | number_format }}</td>
+                    <td>Manageable</td>
+                    <td>✓ Business continuity viable</td>
+                </tr>
+                <tr>
+                    <td>Maximum Credible Loss</td>
+                    <td>£{{ max_loss | default('0') | number_format }}</td>
+                    <td>Survivable</td>
+                    <td>✓ Proportionate measures</td>
+                </tr>
+                <tr>
+                    <td>Risk Reduction Effectiveness</td>
+                    <td>{{ risk_reduction_percentage | default('XX') }}%</td>
+                    <td>Effective</td>
+                    <td>✓ Demonstrable improvement</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Threat Scenario Analysis</h3>
+        <p>
+            <strong>Primary Scenario:</strong> {{ scenario_name }}<br>
+            <strong>Attack Vector:</strong> {{ threat_vector | default('Multi-stage cyber attack') }}<br>
+            <strong>Target Assets:</strong> {{ affected_assets | default('Critical business systems and customer data') }}<br>
+            <strong>Impact Categories:</strong> Confidentiality, Integrity, Availability
+        </p>
+    </div>
+
+    <!-- Incident Response Capability -->
+    <div class="section">
+        <h2>Incident Response & Recovery Capability</h2>
+        
+        <div class="article-section">
+            <h3>NIS2 Article 23 - Incident Reporting</h3>
+            <p>
+                The organization maintains capability to detect, respond to, and report significant 
+                cyber incidents in accordance with NIS2 requirements:
+            </p>
+            
+            <ul>
+                <li><strong>Detection:</strong> 24/7 monitoring with {{ detection_time | default('< 4 hour') }} mean detection time</li>
+                <li><strong>Assessment:</strong> Rapid impact assessment within {{ assessment_time | default('< 2 hours') }} of detection</li>
+                <li><strong>Containment:</strong> Incident containment procedures with {{ containment_time | default('< 6 hour') }} target</li>
+                <li><strong>Reporting:</strong> Automated reporting to national CSIRT within required timeframes</li>
+            </ul>
+        </div>
+
+        <table class="controls-table">
+            <thead>
+                <tr>
+                    <th>Response Phase</th>
+                    <th>Capability</th>
+                    <th>Target Time</th>
+                    <th>NIS2 Requirement</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Initial Assessment</td>
+                    <td>Impact classification and severity assessment</td>
+                    <td>< 2 hours</td>
+                    <td>Article 23(1)</td>
+                </tr>
+                <tr>
+                    <td>Early Warning</td>
+                    <td>Notification to national CSIRT if significant</td>
+                    <td>< 24 hours</td>
+                    <td>Article 23(3)</td>
+                </tr>
+                <tr>
+                    <td>Incident Notification</td>
+                    <td>Detailed incident report to authorities</td>
+                    <td>< 72 hours</td>
+                    <td>Article 23(4)</td>
+                </tr>
+                <tr>
+                    <td>Final Report</td>
+                    <td>Complete incident analysis and lessons learned</td>
+                    <td>< 1 month</td>
+                    <td>Article 23(5)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- Compliance Assessment -->
+    <div class="section">
+        <h2>Overall Compliance Assessment</h2>
+        
+        <div class="compliance-section">
+            <h3>NIS2 Compliance Status</h3>
+            
+            <table class="controls-table">
+                <thead>
+                    <tr>
+                        <th>NIS2 Article</th>
+                        <th>Requirement</th>
+                        <th>Compliance Status</th>
+                        <th>Evidence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Art. 21(1)</td>
+                        <td>Appropriate technical, operational and organisational measures</td>
+                        <td><span class="status-implemented">Compliant</span></td>
+                        <td>Quantified risk management framework</td>
+                    </tr>
+                    <tr>
+                        <td>Art. 21(2)(a)</td>
+                        <td>Risk analysis and information system security policies</td>
+                        <td><span class="status-implemented">Compliant</span></td>
+                        <td>Monte Carlo risk assessment completed</td>
+                    </tr>
+                    <tr>
+                        <td>Art. 21(2)(b)</td>
+                        <td>Incident handling</td>
+                        <td><span class="status-implemented">Compliant</span></td>
+                        <td>Formal incident response procedures</td>
+                    </tr>
+                    <tr>
+                        <td>Art. 21(2)(c)</td>
+                        <td>Business continuity</td>
+                        <td><span class="status-implemented">Compliant</span></td>
+                        <td>Tested business continuity plans</td>
+                    </tr>
+                    <tr>
+                        <td>Art. 21(2)(d)</td>
+                        <td>Supply chain security</td>
+                        <td><span class="status-implemented">Compliant</span></td>
+                        <td>Third-party risk assessment program</td>
+                    </tr>
+                    <tr>
+                        <td>Art. 21(2)(e)</td>
+                        <td>Security in acquisition, development and maintenance</td>
+                        <td><span class="status-implemented">Compliant</span></td>
+                        <td>Security-by-design procurement requirements</td>
+                    </tr>
+                    <tr>
+                        <td>Art. 23</td>
+                        <td>Incident reporting</td>
+                        <td><span class="status-implemented">Compliant</span></td>
+                        <td>Automated incident reporting capability</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Continuous Improvement -->
+    <div class="section">
+        <h2>Continuous Improvement Plan</h2>
+        
+        <h3>Risk Management Enhancement</h3>
+        <p>
+            To maintain and improve NIS2 compliance, the following enhancements are planned:
+        </p>
+        
+        <table class="controls-table">
+            <thead>
+                <tr>
+                    <th>Enhancement Area</th>
+                    <th>Planned Improvement</th>
+                    <th>Timeline</th>
+                    <th>Expected Benefit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Security Monitoring</td>
+                    <td>Enhanced SIEM capabilities and threat hunting</td>
+                    <td>Q2 2024</td>
+                    <td>Improved detection time to < 2 hours</td>
+                </tr>
+                <tr>
+                    <td>Automation</td>
+                    <td>Automated incident response and remediation</td>
+                    <td>Q3 2024</td>
+                    <td>Reduced response time to < 30 minutes</td>
+                </tr>
+                <tr>
+                    <td>Supply Chain</td>
+                    <td>Continuous supplier security monitoring</td>
+                    <td>Q4 2024</td>
+                    <td>Real-time third-party risk visibility</td>
+                </tr>
+                <tr>
+                    <td>Training</td>
+                    <td>Advanced cyber crisis simulation exercises</td>
+                    <td>Ongoing</td>
+                    <td>Enhanced incident response capability</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Methodology -->
+    <div class="section">
+        <h2>Assessment Methodology</h2>
+        
+        <h3>Quantitative Risk Assessment Approach</h3>
+        <p>
+            This NIS2 compliance assessment uses quantitative methods to demonstrate the appropriateness 
+            and proportionality of cybersecurity measures:
+        </p>
+        
+        <ul>
+            <li><strong>FAIR Framework:</strong> Industry-standard Factor Analysis of Information Risk methodology</li>
+            <li><strong>Monte Carlo Simulation:</strong> {{ iterations | number_format }}-iteration probabilistic risk modeling</li>
+            <li><strong>Control Effectiveness Testing:</strong> Empirical measurement of security control performance</li>
+            <li><strong>Threat Intelligence:</strong> Current threat landscape analysis specific to our sector</li>
+        </ul>
+        
+        <h3>Data Sources and Validation</h3>
+        <ul>
+            <li>Internal security incident and event logs</li>
+            <li>National and sector-specific threat intelligence</li>
+            <li>Independent security assessments and penetration tests</li>
+            <li>Industry benchmarking data from sector peers</li>
+        </ul>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>
+            This report demonstrates NIS2 Directive compliance for {{ organization }}<br>
+            Assessment conducted using CyberRisk Quantification Platform<br>
+            Report ID: {{ run_id }}<br>
+            Generated: {{ generated_date }}<br>
+            Confidential and Proprietary - {{ organization }}
+        </p>
+    </div>
+</body>
+</html> 
