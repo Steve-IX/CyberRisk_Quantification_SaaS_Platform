@@ -1,8 +1,9 @@
 """
-CyberRisk SaaS API Package
+CyberRisk API Package
 
-This package contains the FastAPI application and supporting modules
-for the CyberRisk quantification SaaS platform.
+FastAPI-based REST API for cyber risk quantification platform.
+Provides endpoints for Monte Carlo simulations, risk optimization,
+and compliance reporting.
 """
 
 from .main import app
