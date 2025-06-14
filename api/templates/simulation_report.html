@@ -217,7 +217,7 @@
                 <td class="label">Scenario:</td>
                 <td>{{ scenario_name }}</td>
                 <td class="label">Iterations:</td>
-                <td>{{ iterations:,}}</td>
+                                                <td>{{ "{:,}".format(iterations) }}</td>
             </tr>
             <tr>
                 <td class="label">Organization:</td>
@@ -244,7 +244,7 @@
     
     <div class="section">
         <h2>Executive Summary</h2>
-        <p>This quantitative risk analysis evaluated the <strong>{{ scenario_name }}</strong> scenario using Monte Carlo simulation with {{ iterations:,}} iterations. The analysis indicates an expected annual loss of <strong>{{ ale_formatted }}</strong>, placing this risk in the <strong>{{ risk_level }}</strong> category.</p>
+            <p>This quantitative risk analysis evaluated the <strong>{{ scenario_name }}</strong> scenario using Monte Carlo simulation with {{ "{:,}".format(iterations) }} iterations. The analysis indicates an expected annual loss of <strong>{{ ale_formatted }}</strong>, placing this risk in the <strong>{{ risk_level }}</strong> category.</p>
         
         <p>{{ risk_description }}</p>
         
@@ -267,31 +267,31 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Mean Asset Value</td>
-                    <td>£{{ "%.0f"|format(mean_triangular) }}</td>
-                    <td>Average value of affected assets</td>
-                </tr>
-                <tr>
-                    <td>Median Asset Value</td>
-                    <td>£{{ "%.0f"|format(median_triangular) }}</td>
-                    <td>50th percentile asset value</td>
-                </tr>
-                <tr>
-                    <td>Annual Occurrence Rate</td>
-                    <td>{{ "%.2f"|format(mean_occurrences) }} events/year</td>
-                    <td>Expected frequency of occurrence</td>
-                </tr>
-                <tr>
-                    <td>Loss Exceedance Probability</td>
-                    <td>{{ "%.1f"|format(prob2 * 100) }}%</td>
-                    <td>Probability of significant impact</td>
-                </tr>
-                <tr>
-                    <td>Range Probability</td>
-                    <td>{{ "%.1f"|format(prob3 * 100) }}%</td>
-                    <td>Probability within target range</td>
-                </tr>
+                                                <tr>
+                                    <td>Mean Asset Value</td>
+                                    <td>£{{ mean_triangular|round|int }}</td>
+                                    <td>Average value of affected assets</td>
+                                </tr>
+                                <tr>
+                                    <td>Median Asset Value</td>
+                                    <td>£{{ median_triangular|round|int }}</td>
+                                    <td>50th percentile asset value</td>
+                                </tr>
+                                <tr>
+                                    <td>Annual Occurrence Rate</td>
+                                    <td>{{ mean_occurrences|round(2) }} events/year</td>
+                                    <td>Expected frequency of occurrence</td>
+                                </tr>
+                                <tr>
+                                    <td>Loss Exceedance Probability</td>
+                                    <td>{{ (prob2 * 100)|round(1) }}%</td>
+                                    <td>Probability of significant impact</td>
+                                </tr>
+                                <tr>
+                                    <td>Range Probability</td>
+                                    <td>{{ (prob3 * 100)|round(1) }}%</td>
+                                    <td>Probability within target range</td>
+                                </tr>
             </tbody>
         </table>
     </div>
@@ -308,31 +308,31 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>P50 (Median)</td>
-                    <td>£{{ "%.0f"|format(asset_value_percentiles.P50) }}</td>
-                    <td>50% of scenarios below this value</td>
-                </tr>
-                <tr>
-                    <td>P75</td>
-                    <td>£{{ "%.0f"|format(asset_value_percentiles.P75) }}</td>
-                    <td>75% of scenarios below this value</td>
-                </tr>
-                <tr>
-                    <td>P90</td>
-                    <td>£{{ "%.0f"|format(asset_value_percentiles.P90) }}</td>
-                    <td>90% of scenarios below this value</td>
-                </tr>
-                <tr>
-                    <td>P95</td>
-                    <td>£{{ "%.0f"|format(asset_value_percentiles.P95) }}</td>
-                    <td>95% of scenarios below this value</td>
-                </tr>
-                <tr>
-                    <td>P99</td>
-                    <td>£{{ "%.0f"|format(asset_value_percentiles.P99) }}</td>
-                    <td>99% of scenarios below this value</td>
-                </tr>
+                                                <tr>
+                                    <td>P50 (Median)</td>
+                                    <td>£{{ asset_value_percentiles.P50|round|int }}</td>
+                                    <td>50% of scenarios below this value</td>
+                                </tr>
+                                <tr>
+                                    <td>P75</td>
+                                    <td>£{{ asset_value_percentiles.P75|round|int }}</td>
+                                    <td>75% of scenarios below this value</td>
+                                </tr>
+                                <tr>
+                                    <td>P90</td>
+                                    <td>£{{ asset_value_percentiles.P90|round|int }}</td>
+                                    <td>90% of scenarios below this value</td>
+                                </tr>
+                                <tr>
+                                    <td>P95</td>
+                                    <td>£{{ asset_value_percentiles.P95|round|int }}</td>
+                                    <td>95% of scenarios below this value</td>
+                                </tr>
+                                <tr>
+                                    <td>P99</td>
+                                    <td>£{{ asset_value_percentiles.P99|round|int }}</td>
+                                    <td>99% of scenarios below this value</td>
+                                </tr>
             </tbody>
         </table>
     </div>
@@ -364,7 +364,7 @@
             {% endif %}
             
             {% if compliance_metrics.ale_as_percent_of_revenue %}
-            <p><strong>Revenue Impact:</strong> {{ "%.2f"|format(compliance_metrics.ale_as_percent_of_revenue) }}% of annual revenue</p>
+            <p><strong>Revenue Impact:</strong> {{ compliance_metrics.ale_as_percent_of_revenue|round(2) }}% of annual revenue</p>
             {% endif %}
         </div>
         
@@ -379,7 +379,7 @@
     
     <div class="section">
         <h2>Methodology</h2>
-        <p><strong>Simulation Method:</strong> Monte Carlo analysis using {{ iterations:,}} iterations</p>
+                    <p><strong>Simulation Method:</strong> Monte Carlo analysis using {{ "{:,}".format(iterations) }} iterations</p>
         <p><strong>Asset Valuation:</strong> Triangular distribution modeling minimum, most likely, and maximum asset values</p>
         <p><strong>Frequency Analysis:</strong> Discrete probability distribution for annual occurrence rates</p>
         <p><strong>Impact Modeling:</strong> Combined log-normal and Pareto distributions for loss magnitude</p>

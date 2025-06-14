@@ -15,11 +15,17 @@ import tempfile
 
 try:
     from jinja2 import Environment, FileSystemLoader
+    JINJA2_AVAILABLE = True
+except ImportError:
+    JINJA2_AVAILABLE = False
+
+try:
     from weasyprint import HTML, CSS
     from weasyprint.text.fonts import FontConfiguration
     WEASYPRINT_AVAILABLE = True
-except ImportError:
+except (ImportError, OSError) as e:
     WEASYPRINT_AVAILABLE = False
+    print(f"Warning: WeasyPrint not available: {e}. PDF generation will be limited.")
 
 from .database import get_simulation_run
 

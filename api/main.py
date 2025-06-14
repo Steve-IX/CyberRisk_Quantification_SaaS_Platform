@@ -21,7 +21,7 @@ from .database import get_database, init_db
 from .auth import get_current_user
 from .tasks import run_simulation_task
 from .reports import generate_simulation_pdf, generate_optimization_pdf
-from .billing import get_billing_service, check_usage_limit, record_simulation_usage
+from .billing import get_billing_service, check_usage_limit
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -121,7 +121,8 @@ async def start_simulation(
         run_id = str(uuid.uuid4())
         
         # Record usage
-        await record_simulation_usage(user_org_id)
+        billing_service = get_billing_service()
+        await billing_service.record_usage(user_org_id, "simulations", 1)
         
         # Store initial simulation state
         simulation_results[run_id] = {
