@@ -36,6 +36,8 @@ if DATABASE_AVAILABLE:
 
 async def init_db():
     """Initialize database connection and create tables if needed."""
+    global database
+    
     if not DATABASE_AVAILABLE:
         logger.warning("Database dependencies not available - using in-memory storage")
         return
@@ -50,7 +52,6 @@ async def init_db():
     except Exception as e:
         logger.error(f"Database connection failed: {e}")
         # Fall back to in-memory storage
-        global database
         database = None
 
 

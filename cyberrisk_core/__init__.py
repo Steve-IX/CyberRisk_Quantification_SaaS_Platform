@@ -5,7 +5,7 @@ A Python library for quantitative cyber risk analysis using Monte Carlo methods,
 designed for NIS2 and CSRD compliance reporting.
 """
 
-from .risk_metrics import Task1 as calculate_ale
+from .risk_metrics import Task1 as calculate_ale, calculate_percentiles, format_currency
 from .prob_model import Task2 as calculate_conditional_probabilities  
 from .control_optimizer import Task3 as optimize_controls
 
@@ -17,5 +17,7 @@ __author__ = "Steve-IX"
 __all__ = [
     "calculate_ale",
     "calculate_conditional_probabilities", 
-    "optimize_controls"
+    "optimize_controls",
+    "calculate_percentiles",
+    "format_currency"
 ] 
