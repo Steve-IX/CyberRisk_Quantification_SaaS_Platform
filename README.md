@@ -1,130 +1,293 @@
-# Risk-Analytics Toolkit – Monte Carlo, Probability and Optimization in Python
+# CyberRisk Quantification SaaS Platform
 
-**Risk-Analytics Toolkit** is a Python package that bundles three self-contained modules that quantify and mitigate cyber-risk:
+**A complete cyber risk quantification platform for NIS2 & CSRD compliance**
 
-| Module                 | What it solves                                                                                                                   | Techniques used                                                                                    |   |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | - |
-| `risk_metrics.py`      | Computes annualized loss expectancy (ALE) from distributional inputs and Monte Carlo samples                                     | Triangular, log-normal and Pareto distributions, vectorized NumPy sampling, Monte Carlo estimation |   |
-| `prob_model.py`        | Answers “what-if” questions on a two-phase security process, including conditional positives                                     | Joint probability tables, marginalization, Bayes rule                                              |   |
-| `control_optimizer.py` | Learns how security controls affect safeguard effect and maintenance load, then finds the cheapest way to strengthen the network | Ordinary least squares, SciPy `linprog`                                                            |   |
-
-Everything is pure Python 3 with minimal, widely available dependencies.
+Transform your cyber risk data into actionable business intelligence with Monte Carlo simulation, control optimization, and automated compliance reporting.
 
 ---
 
-## Why this repo
+## 🚀 What's New: SaaS Platform
 
-* **End-to-end workflow** – from raw probability data to actionable control counts.
-* **No black boxes** – every formula is implemented explicitly and heavily commented so you can trace the math line by line.
-* **Reproducible outputs** – each module exposes a single top-level function (`Task1`, `Task2`, `Task3`) whose signature matches the public API shown below.
+This project has been transformed from a simple Monte Carlo toolkit into a **production-ready SaaS platform** for cyber risk quantification. Perfect for UK-EU companies facing NIS2 and CSRD reporting requirements.
+
+### ✨ Key Features
+
+| Feature | Description | Business Value |
+|---------|-------------|----------------|
+| **Monte Carlo Risk Simulation** | FAIR-style quantitative risk analysis with 10k+ iterations | Convert "High/Medium/Low" to £ figures your board understands |
+| **Control Optimization** | Linear programming to find cheapest path to risk targets | Defend security budgets with mathematical precision |
+| **NIS2/CSRD Compliance** | Auto-generate regulatory annexes from simulation outputs | Save dozens of analyst hours per quarter |
+| **RESTful API** | FastAPI with OpenAPI docs and JWT authentication | Integrate with existing security tools and workflows |
+| **Async Processing** | Background simulation tasks with real-time progress | Handle enterprise-scale risk models without timeouts |
 
 ---
 
-## Repository layout
+## 🏗️ Architecture
 
 ```
-risk-analytics/
-├─ risk_metrics.py          # Task 1 – ALE via Monte Carlo
-├─ prob_model.py            # Task 2 – conditional probabilities
-├─ control_optimizer.py     # Task 3 – regression and LP
-├─ examples/
-│  ├─ demo_task1.py
-│  ├─ demo_task2.py
-│  └─ demo_task3.py
-├─ requirements.txt
-└─ README.md
+┌─ Next.js Frontend (Coming Soon)
+│  ├─ Risk Dashboard
+│  ├─ Simulation Builder  
+│  └─ Compliance Reports
+│
+├─ FastAPI Backend
+│  ├─ /api/v1/simulate (POST)
+│  ├─ /api/v1/optimize (POST)
+│  └─ /api/v1/results/{id} (GET)
+│
+├─ CyberRisk Core Library
+│  ├─ Monte Carlo Engine
+│  ├─ Probability Models
+│  └─ Control Optimizer
+│
+└─ PostgreSQL Database
+   ├─ Simulation Results
+   ├─ User Organizations
+   └─ Asset Inventory
 ```
 
 ---
 
-## Quick start
+## 🚀 Quick Start
+
+### 1. Install Dependencies
 
 ```bash
-# 1. Clone and install
-git clone https://github.com/<your-handle>/risk-analytics.git
-cd risk-analytics
-python -m venv venv && source venv/bin/activate
-pip install -r requirements.txt   # numpy, scipy, pandas, matplotlib
+# Clone the repository
+git clone https://github.com/Steve-IX/Monte-Carlo-Probability-and-Optimization-in-Python.git
+cd Monte-Carlo-Probability-and-Optimization-in-Python
 
-# 2. Run the canned examples
-python examples/demo_task1.py
-python examples/demo_task2.py
-python examples/demo_task3.py
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
 ```
 
-Each script prints intermediate steps and a final result so you can verify the logic quickly.
+### 2. Run the Demo
+
+```bash
+# Test the core library with examples
+python demo.py
+```
+
+This will run comprehensive demos showing:
+- ALE calculation for an e-commerce data breach scenario
+- Conditional probability analysis for security screening
+- Control optimization for firewall/IDS/endpoint deployment
+- Integrated risk management workflow with ROI analysis
+
+### 3. Start the API Server
+
+```bash
+# Start FastAPI development server
+uvicorn api.main:app --reload
+
+# API will be available at:
+# - Swagger UI: http://localhost:8000/docs
+# - ReDoc: http://localhost:8000/redoc
+# - Health check: http://localhost:8000/health
+```
+
+### 4. Get Authentication Token
+
+```bash
+# Generate a demo JWT token
+python api/auth.py
+```
+
+Use this token in the `Authorization: Bearer <token>` header for API requests.
 
 ---
 
-## Public API
+## 📊 API Usage Examples
 
-```python
-from risk_metrics import Task1
-from prob_model import Task2
-from control_optimizer import Task3
+### Start a Risk Simulation
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/simulate" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "asset_value_min": 50000,
+    "asset_value_mode": 150000,
+    "asset_value_max": 500000,
+    "occurrence_counts": [0, 1, 2, 3, 4, 5],
+    "occurrence_probabilities": [0.3, 0.4, 0.2, 0.06, 0.03, 0.01],
+    "iterations": 10000,
+    "flaw_a_mu": 9.2,
+    "flaw_a_sigma": 1.0,
+    "flaw_b_scale": 5000,
+    "flaw_b_alpha": 2.5,
+    "threshold_point1": 100000,
+    "threshold_point2": 50000,
+    "range_point3": 20000,
+    "range_point4": 100000,
+    "scenario_name": "E-commerce Data Breach"
+  }'
 ```
 
-### Task 1 – ALE and Monte Carlo
+### Get Simulation Results
 
-```python
-prob1, mean_t, median_t, mean_d, var_d, prob2, prob3, ale = Task1(
-    a=1_000, b=20_000, c=8_000,           # triangular AV parameters
-    point1=12_000,                        # Pr(AV ≤ point1)
-    number_set=[0,1,2,3,4,5,6,7,8,9],     # discrete occurrence counts
-    prob_set=[0.05,0.11,...,0.01],        # matching probabilities
-    num=100_000,                          # Monte Carlo draws
-    point2=25_000, point3=10_000, point4=20_000,
-    mu=9.2, sigma=1.0,                    # log-normal for flaw A
-    xm=5_000, alpha=2.5                  # Pareto for flaw B
-)
+```bash
+curl -X GET "http://localhost:8000/api/v1/results/{run_id}" \
+  -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
-### Task 2 – Two-phase screening
+### Optimize Security Controls
 
-```python
-prob1, prob2, prob3 = Task2(
-    num=500,
-    table=[[a,b,c,d], [e,f,g,h], [i,j,k,l]],  # 3×4 joint counts
-    probs=[PX2,PX3,PX4,PX5,PY6,PY7]           # conditional T|X,Y
-)
+```bash
+curl -X POST "http://localhost:8000/api/v1/optimize" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "historical_data": [
+      [2, 3, 1, 4, 2, 3, 1, 2, 3],
+      [1, 2, 3, 2, 1, 2, 3, 1, 2],
+      [3, 2, 4, 1, 3, 2, 4, 3, 2],
+      [1, 1, 2, 2, 1, 1, 2, 1, 1]
+    ],
+    "safeguard_effects": [85, 78, 92, 70, 88, 82, 95, 87, 80],
+    "maintenance_loads": [45, 52, 38, 65, 42, 48, 35, 44, 50],
+    "current_controls": [2, 1, 3, 1],
+    "control_costs": [10000, 15000, 8000, 5000],
+    "control_limits": [5, 4, 6, 3],
+    "safeguard_target": 90.0,
+    "maintenance_limit": 50.0
+  }'
 ```
-
-### Task 3 – Control optimization
-
-```python
-weights_b, weights_d, x_add = Task3(
-    x=[[x11,x12,...,x15],  # 4×5 matrix of historical control counts
-       ...],
-    y=[y1,y2,y3,y4,y5],    # safeguard effects
-    z=[z1,z2,z3,z4,z5],    # maintenance loads
-    x_initial=[1,0,3,2],   # current deployment
-    c=[c1,c2,c3,c4],       # unit costs
-    x_bound=[nb1,nb2,nb3,nb4], # per-type upper limits
-    se_bound=120, ml_bound=80
-)
-```
-
-`x_add` is a float vector showing exactly how many extra controls to deploy per type.
 
 ---
 
-## Implementation notes
+## 💼 Business Use Cases
 
-* **Vectorization first** – NumPy and SciPy replace Python loops wherever possible for speed on large Monte Carlo runs.
-* **Deterministic seeds** – examples fix `np.random.seed(42)` so your first run matches the README.
-* **Clear separation** – math helpers (`_triangular_cdf`, `_long_name`) live in private functions to keep the top-level API clean.
-* **Graceful fallbacks** – if SciPy’s `linprog` is missing, `control_optimizer.py` raises a descriptive error instead of crashing.
+### 1. **Board Risk Reporting**
+- Convert technical vulnerabilities into £ figures
+- Generate executive-ready risk dashboards
+- Track risk reduction ROI over time
+
+### 2. **NIS2 Compliance** (EU Directive 2022/2555)
+- Automated risk management measure documentation
+- Supply chain security risk quantification
+- Incident impact calculations
+
+### 3. **CSRD Reporting** (EU Directive 2022/2464)
+- Cyber risk materiality assessments
+- Financial impact disclosures
+- Sustainability risk integration
+
+### 4. **Security Investment Planning**
+- Optimize control portfolios under budget constraints
+- Quantify insurance vs. controls trade-offs
+- Justify security spending with hard numbers
 
 ---
 
-## Extending the toolkit
+## 🎯 Pricing & Go-to-Market
 
-| Idea                         | Hint                                                                                 |
-| ---------------------------- | ------------------------------------------------------------------------------------ |
-| **Risk correlations**        | Couple flaw A and flaw B with a copula instead of assuming independence.             |
-| **Discrete-time simulation** | Replace analytical ALE with a time-stepped cash-flow model.                          |
-| **Dashboard**                | Wrap the three tasks in a small Flask or Streamlit front end for interactive tuning. |
+| Tier | Price/Month | Users | Simulations | Target Customers |
+|------|-------------|-------|-------------|------------------|
+| **Starter** | £49 | 2 | 50 | Small consultancies, vCISOs |
+| **Pro** | £199 | 10 | 500 | Mid-market (50-500 employees) |
+| **Enterprise** | £499 | 25 | Unlimited | Large enterprises, MSPs |
 
-Pull requests are welcome – especially for unit tests, new distributions, or additional optimization constraints.
+**Launch Strategy:**
+- Target UK/EU companies with 50-500 employees holding PII/cardholder data
+- Focus on sectors facing NIS2 requirements (critical infrastructure, digital services)
+- Partner with Cyber Essentials assessors and vCISO consultancies
 
 ---
+
+## 🛠️ Development Roadmap
+
+### Phase 1: MVP (Weeks 1-4) ✅
+- [x] Core Monte Carlo library
+- [x] FastAPI backend with auth
+- [x] PostgreSQL integration
+- [x] Comprehensive product specification
+
+### Phase 2: SaaS MVP (Weeks 5-8)
+- [ ] Next.js frontend dashboard
+- [ ] File upload for asset/scenario data
+- [ ] PDF report generation
+- [ ] Stripe billing integration
+
+### Phase 3: Market Ready (Weeks 9-12)
+- [ ] Control optimization UI
+- [ ] NIS2/CSRD report templates
+- [ ] Multi-tenant organization support
+- [ ] Performance optimization
+
+### Phase 4: Scale (Months 4-6)
+- [ ] Vulnerability scanner integrations
+- [ ] Third-party risk analysis
+- [ ] Insurance portal integrations
+- [ ] AI-powered risk narratives
+
+---
+
+## 🏢 Enterprise Features
+
+### Database Schema
+- Multi-tenant organization support
+- Asset inventory management
+- Scenario library with templates
+- Audit trails and compliance logging
+
+### Security & Compliance
+- JWT authentication with role-based access
+- SOC 2 Type II controls mapping
+- ISO 27001 Annex A implementation
+- GDPR data retention policies
+
+### Performance & Scale
+- Async background processing
+- Redis caching for simulation results
+- Auto-scaling with AWS Lambda/Fargate
+- CDN delivery for reports and dashboards
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please see:
+- `PRODUCT_SPEC.md` for detailed technical specifications
+- Issues for feature requests and bug reports
+- Pull requests for code contributions
+
+### Development Setup
+
+```bash
+# Install development dependencies
+pip install -r requirements.txt
+pip install pytest black flake8
+
+# Run tests
+pytest
+
+# Format code
+black .
+
+# Run linting
+flake8
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+## 🆘 Support
+
+- **Documentation:** See `PRODUCT_SPEC.md` for complete technical specifications
+- **API Docs:** http://localhost:8000/docs (when running locally)
+- **Issues:** GitHub Issues for bug reports and feature requests
+- **Commercial Support:** Contact for enterprise licensing and support
+
+---
+
+**Ready to transform your cyber risk management? Start with the demo and see your risks in £ rather than colors!** 🎯
