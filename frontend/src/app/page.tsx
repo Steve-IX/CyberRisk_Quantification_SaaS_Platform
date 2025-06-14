@@ -24,6 +24,11 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true)
   const [recentSimulations, setRecentSimulations] = useState<SimulationRun[]>([])
   const [apiHealth, setApiHealth] = useState<any>(null)
+  const [usageLimits, setUsageLimits] = useState<{
+    tier: string
+    limits: any
+    current_usage: any
+  } | null>(null)
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -61,6 +66,15 @@ export default function Dashboard() {
       // Check API health
       const health = await authService.healthCheck()
       setApiHealth(health)
+
+      // Load usage limits
+      try {
+        const usage = await authService.apiRequest<any>('/api/v1/billing/usage-limits')
+        setUsageLimits(usage)
+      } catch (error) {
+        console.error('Failed to load usage limits:', error)
+        // Non-critical error, don't show toast
+      }
     } catch (error) {
       console.error('Failed to load dashboard data:', error)
       toast.error('Failed to load dashboard data')
@@ -212,6 +226,118 @@ export default function Dashboard() {
             </div>
           </Link>
         </div>
+
+        {/* Pricing and Upgrade Section */}
+        <div className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Upgrade Your Plan</h3>
+              <p className="text-gray-600">Get unlimited simulations, advanced features, and priority support.</p>
+            </div>
+            <Link
+              href="/pricing"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+            >
+              View Pricing
+            </Link>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {/* Quick action cards are above */}
+        </div>
+
+        {/* Usage Limits */}
+        {usageLimits && (
+          <div className="mb-8 bg-white rounded-lg shadow-sm border border-gray-200">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900">Usage & Limits</h3>
+                  <p className="text-sm text-gray-600">Current plan: {usageLimits.tier.charAt(0).toUpperCase() + usageLimits.tier.slice(1)}</p>
+                </div>
+                <Link
+                  href="/pricing"
+                  className="text-blue-600 hover:text-blue-500 text-sm font-medium"
+                >
+                  Upgrade Plan
+                </Link>
+              </div>
+            </div>
+            
+            <div className="p-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-700">Simulations</span>
+                    <span className="text-xs text-gray-500">This month</span>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="flex-1 bg-gray-200 rounded-full h-2 mr-3">
+                      <div 
+                        className="bg-blue-600 h-2 rounded-full" 
+                        style={{ 
+                          width: `${Math.min(100, (usageLimits.current_usage.simulations_this_month / 
+                            (usageLimits.limits.simulations_per_month === -1 ? 100 : usageLimits.limits.simulations_per_month)) * 100)}%` 
+                        }}
+                      ></div>
+                    </div>
+                    <span className="text-sm text-gray-600">
+                      {usageLimits.current_usage.simulations_this_month}/
+                      {usageLimits.limits.simulations_per_month === -1 ? '∞' : usageLimits.limits.simulations_per_month}
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-700">PDF Downloads</span>
+                    <span className="text-xs text-gray-500">This month</span>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="flex-1 bg-gray-200 rounded-full h-2 mr-3">
+                      <div 
+                        className="bg-green-600 h-2 rounded-full" 
+                        style={{ 
+                          width: `${Math.min(100, (usageLimits.current_usage.pdf_downloads_this_month / 
+                            (usageLimits.limits.pdf_downloads === -1 ? 100 : usageLimits.limits.pdf_downloads)) * 100)}%` 
+                        }}
+                      ></div>
+                    </div>
+                    <span className="text-sm text-gray-600">
+                      {usageLimits.current_usage.pdf_downloads_this_month}/
+                      {usageLimits.limits.pdf_downloads === -1 ? '∞' : usageLimits.limits.pdf_downloads}
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-700">Max Iterations</span>
+                    <span className="text-xs text-gray-500">Per simulation</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-sm text-gray-900 font-medium">
+                      {usageLimits.limits.max_iterations === -1 ? 'Unlimited' : `${(usageLimits.limits.max_iterations / 1000)}k`}
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-700">Team Members</span>
+                    <span className="text-xs text-gray-500">Active</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-sm text-gray-900 font-medium">
+                      {usageLimits.current_usage.users}/{usageLimits.limits.users}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Recent Activity */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
