@@ -1,18 +1,18 @@
 {
-  "timestamp": "2025-06-14T20:08:30.061608",
-  "duration": 7.65166711807251,
+  "timestamp": "2025-06-14T22:37:04.042102",
+  "duration": 4.396380662918091,
   "results": {
-    "Billing & Subscription Management": "FAILED: cannot import name 'get_db_connection' from 'api.database' (C:\\Users\\astep\\OneDrive\\Documents\\GITHUB\\Monte-Carlo-Probability-and-Optimization-in-Python\\api\\database.py)",
+    "Billing & Subscription Management": "PASSED",
     "Control Optimization": "FAILED: cannot import name 'ControlOptimizer' from 'cyberrisk_core.control_optimizer' (C:\\Users\\astep\\OneDrive\\Documents\\GITHUB\\Monte-Carlo-Probability-and-Optimization-in-Python\\cyberrisk_core\\control_optimizer.py)",
     "Compliance Reports": "PASSED",
     "Performance & Scalability": "FAILED: cannot import name 'RiskAnalyzer' from 'cyberrisk_core.risk_metrics' (C:\\Users\\astep\\OneDrive\\Documents\\GITHUB\\Monte-Carlo-Probability-and-Optimization-in-Python\\cyberrisk_core\\risk_metrics.py)",
-    "Integration Testing": "FAILED: cannot import name 'get_db_connection' from 'api.database' (C:\\Users\\astep\\OneDrive\\Documents\\GITHUB\\Monte-Carlo-Probability-and-Optimization-in-Python\\api\\database.py)"
+    "Integration Testing": "FAILED: 'coroutine' object does not support the asynchronous context manager protocol"
   },
   "summary": {
     "total_tests": 5,
-    "passed": 1,
-    "failed": 4,
-    "success_rate": 20.0
+    "passed": 2,
+    "failed": 3,
+    "success_rate": 40.0
   },
   "implementation_status": {
     "Enhanced Stripe Integration": "\u2705 COMPLETE",
